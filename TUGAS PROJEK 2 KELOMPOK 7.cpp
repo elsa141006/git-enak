@@ -44,10 +44,8 @@ int main() {
         getline(cin, sKawin);
         cout << "Masukkan Pekerjaan: ";
         getline(cin, pkr);
-
         cout << "Masukkan Kewarganegaraan: ";
         getline(cin, kwn);
-
         cout << "Masukkan Tanggal Berlaku Hingga: ";
         cin >> tgl;
         cout << "Masukkan Bulan Berlaku Hingga: ";
