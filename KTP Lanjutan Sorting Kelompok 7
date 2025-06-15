@@ -35,6 +35,18 @@ public:
             }
         }
     }
+    
+    static void sortByTanggalLahir(KTP data[], int jumlah) {
+        for (int i = 0; i < jumlah - 1; ++i) {
+            for (int j = 0; j < jumlah - i - 1; ++j) {
+                if (data[j].tanggal_lahir > data[j + 1].tanggal_lahir) {
+                    KTP temp = data[j];
+                    data[j] = data[j + 1];
+                    data[j + 1] = temp;
+                }
+            }
+        }
+    }
 };
 
 string formatTanggal(const string& input) {
@@ -108,23 +120,40 @@ void pilihAgama(string &agama) {
 }
 
 void inputKTP(KTP &ktp) {
-    cout << "Masukkan NIK: "; cin >> ktp.nik; cin.ignore();
-    cout << "Masukkan Nama: "; getline(cin, ktp.nama);
-    cout << "Masukkan Tempat: "; getline(cin, ktp.tempat_lahir);
+    cout << "Masukkan NIK: "; 
+	cin >> ktp.nik; 
+	cin.ignore();
+    cout << "Masukkan Nama: "; 
+	getline(cin, ktp.nama);
+    cout << "Masukkan Tempat: "; 
+	getline(cin, ktp.tempat_lahir);
+	
     string tanggal_input;
-    cout << "Masukkan Tanggal Lahir : "; getline(cin, tanggal_input);
+    cout << "Masukkan Tanggal Lahir : ";
+	getline(cin, tanggal_input);
     ktp.tanggal_lahir = formatTanggal(tanggal_input);
-    cout << "Masukkan Jenis Kelamin:\n"; pilihKelamin(ktp.jenis_kelamin);
-    cout << "Masukkan Golongan Darah (A/B/AB/O): "; cin >> ktp.gol_darah; cin.ignore();
-    cout << "Masukkan Alamat: "; getline(cin, ktp.alamat);
-    cout << "Masukkan RT/RW: "; getline(cin, ktp.rt_rw);
-    cout << "Masukkan Kelurahan/Desa: "; getline(cin, ktp.kel_desa);
-    cout << "Masukkan Kecamatan: "; getline(cin, ktp.kecamatan);
+    cout << "Masukkan Jenis Kelamin:\n"; 
+	pilihKelamin(ktp.jenis_kelamin);
+    cout << "Masukkan Golongan Darah (A/B/AB/O): "; 
+	cin >> ktp.gol_darah; cin.ignore();
+    cout << "Masukkan Alamat: "; 
+	getline(cin, ktp.alamat);
+    cout << "Masukkan RT/RW: "; 
+	getline(cin, ktp.rt_rw);
+    cout << "Masukkan Kelurahan/Desa: "; 
+	getline(cin, ktp.kel_desa);
+    cout << "Masukkan Kecamatan: "; 
+	getline(cin, ktp.kecamatan);
+	
     pilihAgama(ktp.agama);
-    cout << "Masukkan Status Perkawinan: "; getline(cin, ktp.status_perkawinan);
-    cout << "Masukkan Pekerjaan: "; getline(cin, ktp.pekerjaan);
-    cout << "Masukkan Kewarganegaraan: "; getline(cin, ktp.kewarganegaraan);
-    cout << "Masukkan Berlaku Hingga: "; getline(cin, ktp.berlaku_hingga);
+    cout << "Masukkan Status Perkawinan: "; 
+	getline(cin, ktp.status_perkawinan);
+    cout << "Masukkan Pekerjaan: "; 
+	getline(cin, ktp.pekerjaan);
+    cout << "Masukkan Kewarganegaraan: "; 
+	getline(cin, ktp.kewarganegaraan);
+    cout << "Masukkan Berlaku Hingga: "; 
+	getline(cin, ktp.berlaku_hingga);
 }
 
 void displayKTP(const KTP &ktp) {
@@ -159,7 +188,25 @@ void cariKTP(KTP data[], int jumlah) {
         }
     }
     if (!ditemukan) {
-        cout << "Data dengan NIK tersebut tidak ditemukan.\n";
+        cout << "Data dengan NIK tersebut tidak ditemukan." << endl;
+    }
+}
+
+void cariNama(KTP data[], int jumlah) {
+    string keyword;
+    bool ditemukan = false;
+    cout << "Masukkan nama yang ingin dicari: ";
+    cin.ignore();
+    getline(cin, keyword);
+
+    for (int i = 0; i < jumlah; ++i) {
+        if (data[i].nama.find(keyword) != string::npos) {
+            displayKTP(data[i]);
+            ditemukan = true;
+        }
+    }
+    if (!ditemukan) {
+        cout << "Tidak ditemukan data dengan nama tersebut." << endl;
     }
 }
 
@@ -178,14 +225,15 @@ int main() {
 
     int pilihan;
     do {
-        cout << "\n=== MENU ===\n";
-        cout << "1. Tampilkan semua data\n";
-        cout << "2. Urutkan berdasarkan nama\n";
-        cout << "3. Cari berdasarkan NIK\n";
-        cout << "0. Keluar\n";
+       cout << "\n=== MENU ===\n";
+        cout << "1. Tampilkan semua data" << endl;
+        cout << "2. Cari berdasarkan NIK" << endl;
+        cout << "3. Cari berdasarkan Nama" << endl;
+        cout << "4. Urutkan berdasarkan nama" << endl;
+        cout << "5. Urutkan berdasarkan Tanggal Lahir" << endl;
+        cout << "0. Keluar" << endl;
         cout << "Pilih menu: ";
         cin >> pilihan;
-        cin.ignore();
 
         switch (pilihan) {
             case 1:
@@ -194,17 +242,30 @@ int main() {
                 }
                 break;
             case 2:
-                KTPSorter::sortByName(daftarKTP, jumlah);
-                cout << "Data berhasil diurutkan berdasarkan nama.\n";
-                break;
-            case 3:
                 cariKTP(daftarKTP, jumlah);
                 break;
+            case 3:
+                cariNama(daftarKTP, jumlah);
+                break;
+            case 4:
+                KTPSorter::sortByName(daftarKTP, jumlah);
+			    cout << "Data berhasil diurutkan berdasarkan nama:\n";
+			    for (int i = 0; i < jumlah; ++i) {
+			        displayKTP(daftarKTP[i]);
+			    }
+			    break;
+            case 5:
+                KTPSorter::sortByTanggalLahir(daftarKTP, jumlah);
+			    cout << "Data berhasil diurutkan berdasarkan tanggal lahir:\n";
+			    for (int i = 0; i < jumlah; ++i) {
+			        displayKTP(daftarKTP[i]);
+			    }
+    break;
             case 0:
-                cout << "Keluar dari program.\n";
+                cout << "Keluar dari program." << endl;
                 break;
             default:
-                cout << "Pilihan tidak valid!\n";
+                cout << "Pilihan tidak valid!" << endl;
                 break;
         }
     } while (pilihan != 0);
