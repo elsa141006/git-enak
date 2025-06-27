@@ -92,7 +92,7 @@ string formatTanggal(string input) {
 
 bool pilihNaikTurun() {
     int pilih;
-    cout << "Pilih urutan:\n1. Naik\n2. Turun\nPilihan: ";
+    cout << "Pilih urutan:\n1. Ascending\n2. Descending\nPilihan: ";
     cin >> pilih;
     return pilih == 1;
 }
